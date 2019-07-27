@@ -4,6 +4,7 @@ import './App.css';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import DetailView from './components/DetailView';
 import ApplianceInputForm from './components/ApplianceInputForm';
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
             <div className="App">
                 <Header />
 
-                // <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
+                <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
                 <DetailView/>
                 <Footer/>
             </div>
