@@ -47,6 +47,19 @@ module.exports = function suggest(body) {
 function compileList(newAppList, oldAppliance, margin, json){
   let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
 
+  newAppList = compileList(newAppList, oldAppliance, 0.1, json)
+  newAppList.sort(function (a,b){return Number(b.stars) - Number(a.stars)});
+
+  resp.push(200);
+  //newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
+  resp.push(newAppList);
+  return resp;
+}
+
+
+function compileList(newAppList, oldAppliance, margin, json){
+  let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
+
   for(let i = 0; i < json.length; i++){
     var appliance = json[i];
     let newVolume = appliance.length * appliance.width * appliance.height;
@@ -123,6 +136,6 @@ let tree = 6.28;
 
     newAppList[i] = newApp;
   }
-  console.log(newAppList);
+
   return newAppList;
 }
