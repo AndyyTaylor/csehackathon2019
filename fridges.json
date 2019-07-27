@@ -1,0 +1,16 @@
+[
+    {
+        "type": "fridge",
+        "energyConsumption": 0.307,
+        "volume": 299,
+        "model": "AOAO23109AOECH",
+        "company": "FridgeCo",
+        "productUrl": "https://",
+        "image": "http://... .png",
+        "length": 0.3,
+        "width": ...,
+        "height": ...
+    }, {
+
+    }
+]
