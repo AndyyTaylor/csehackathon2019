@@ -200,3 +200,7 @@ h1 {
   border-color: lightblue;
   border-style: solid;
 }
+
+.detail-info {
+  margin-left: 30px;
+}
