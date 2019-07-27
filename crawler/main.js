@@ -205,7 +205,7 @@ const websites = [
                         regex: /\d+/
                     }, 'energy star rating': {
                         name: 'stars',
-                        regex: /\d+/
+                        regex: /\d+(.\d+)?/
                     }, 'total volume': {
                         name: 'volume',
                         regex: /\d+/
