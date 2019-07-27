@@ -30,8 +30,8 @@ class DetailView extends Component {
                        <Bar width={100} height={50} data={{
                                labels: ['Old kWh', 'Old CO2', 'New kWh', 'New CO2'],
                                datasets: [{
-                                   label: 'Efficiency and Emission Comparison',
-                                   data: [40, 50, 10, 20],
+                                   //label: 'Efficiency and Emission Comparison',
+                                   data: [this.props.appliance.oldPower, this.props.appliance.oldCarbonFootprint, this.props.appliance.newPower, this.props.appliance.newCarbonFootprint],
                                    backgroundColor: [
                                        'rgba(0,0,0,0.7)',
                                        'rgba(242,204,0,0.85)',
@@ -54,7 +54,7 @@ class DetailView extends Component {
                                labels: ['Now', 'In 1 yr', 'In 5 yrs', 'In 10 yrs'],
                                datasets: [{
                                    label: 'Cost Savings???',
-                                   data: [0, 12, 40, 90],
+                                   data: [0, this.props.appliance.savingsOne, this.props.appliance.savingsFive, this.props.appliance.savingsTen],
                                    borderColor: [
                                        'rgba(0,0,0,0.7)'
                                    ],

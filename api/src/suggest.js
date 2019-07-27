@@ -3,22 +3,24 @@ module.exports = function suggest(body) {
   let newAppList = [];
   let json = require(process.cwd() + '/' + oldAppliance.type + '.json');
   let resp = [];
-
+  let state;
+  let energyCost;
   let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
 
-  //Check to see if customer gave energy bill cost, if not set to default
-  if(!oldAppliance.energyCost){
-    let energyCost = 0.307;
-  }
-  else{
-    let energyCost = oldAppliance.energyCost;
-  }
+  //Check to see if customer gave energy bill cost, if not set to
 
-  if (!oldAppliance.state){
-    let state = 'NSW';
+  if(!oldAppliance.energyCost){
+    energyCost = 0.307;
   }
   else{
-    let state = oldAppliance.state;
+    energyCost = oldAppliance.energyCost;
+  }
+  // let energyCost = 0.0
+  if (!oldAppliance.state){
+    state = 'NSW';
+  }
+  else{
+    state = oldAppliance.state;
   }
 
   for(let i = 0; i < json.length; i++){
@@ -37,7 +39,7 @@ module.exports = function suggest(body) {
   newAppList.sort(function (a,b){return Number(b.stars) - Number(a.stars)});
 
   resp.push(200);
-  //newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
+  newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
   resp.push(newAppList);
   return resp;
 }
@@ -56,8 +58,8 @@ function savingsInfo(oldApp, newAppList, energyCost, state){
     // Carbon values are in GHG (CO2 in kg)
   };
 
-  oldPowerCost = energyCost * oldApp.energyConsumption;
-  oldCarbon = state_EF.state * oldApp.energyConsumption;
+let  oldPowerCost = energyCost * oldApp.energyConsumption;
+let  oldCarbon = state_EF[state] * oldApp.energyConsumption;
 
   for(let i = 0; i < newAppList.length; i++){
     newApp = newAppList[i];
@@ -65,16 +67,20 @@ function savingsInfo(oldApp, newAppList, energyCost, state){
     newPowerCost = energyCost * newApp.energyConsumption;
     priceDiff = oldPowerCost - newPowerCost;
 
-    newCarbon = state_EF.state * newApp.energyConsumption;
+    newCarbon = state_EF[state] * newApp.energyConsumption;
     carbonDiff = oldCarbon - newCarbon;
 
-    newApp['New Power Cost'] = newPowerCost;
-    newApp['Price Cost Difference'] = priceDiff;
-    newApp['New Carbon Footprint'] = newCarbon;
-    newApp['Carbon Footpring Difference'] = carbonDiff;
+    newApp['oldPower'] = Math.floor(oldApp.energyConsumption);
+    newApp['oldCarbonFootprint'] = Math.floor(oldCarbon);
+    newApp['newPower'] = Math.floor(newApp.energyConsumption);
+    newApp['newCarbonFootprint'] = Math.floor(newCarbon);
+    newApp['savingsOne'] = Math.floor(priceDiff);
+    newApp['savingsFive'] = Math.floor(5*priceDiff);
+    newApp['savingsTen'] = Math.floor(10*priceDiff);
+  //  newApp['carbonFootprintDiffernce'] = carbonDiff;
 
     newAppList[i] = newApp;
   }
-
+  console.log(newAppList);
   return newAppList;
 }
