@@ -25,7 +25,7 @@ class Header extends Component {
 			}
 			return (
 				<div className="results-row container-fluid overflow-hidden">
-					<h2 className="text-justify row-header">Suggested for you</h2>
+					<h2 className="text-justify row-header">SUGGESTED FOR YOU</h2>
 					<div className="overflow-auto"> { appliances } </div>
 				</div>
 			)

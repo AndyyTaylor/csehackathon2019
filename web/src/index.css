@@ -37,6 +37,12 @@ h1 {
   cursor: pointer;
 }
 
+.randomyellow {
+  overflow: hidden;
+  background-color: #ffe400;
+  padding: 11px;
+}
+
 .header {
   overflow: hidden;
   background-color: black;
@@ -60,7 +66,7 @@ h1 {
 }
 
 .header a:hover {
-  background-color: white;
+  background-color: #b0aaa5;
   color: black;
 }
 
@@ -83,9 +89,10 @@ h1 {
   margin-right: 50px;
   margin-top: 30px;
   margin-bottom: 20px;
-  padding: 50px 50px 450px;
+  padding: 40px 50px 570px;
   border-radius: 20px;
-  background-image: url(city1.jpg);
+  background-image: url(city2.jpg);
+  background-size: cover;
 }
 
 .blankspace {
@@ -97,8 +104,7 @@ h1 {
 
     left: calc(50% - 200px);
     width: 400px;
-
-    padding: 15px;
+    padding: 20px;
     background-color: #ffe400;
 
     border-radius: 20px;
@@ -107,6 +113,13 @@ h1 {
 .align_right {
     display: inline-block;
     text-align: right;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #ffb300;
+  font-size: 15px;
+  color: white;
 }
 
 /*for detailview*/
@@ -130,15 +143,15 @@ h1 {
   padding: 10px;
 }
 
+/*for resultsrow*/
 .results-row {
     white-space: nowrap;
 
     width: calc(100% - 60px);
     margin: 0px 30px 0px 30px;
 
-    border-width: 5px;
-    border-color: lightblue;
-    border-style: solid;
+    background-color: black;
+    border-radius: 20px;
 
     padding-bottom: 10px;
 }
@@ -146,17 +159,45 @@ h1 {
 .results-item {
     display: inline-block;
     margin-right: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
     vertical-align: top;
 }
 
 .results-image {
     width: 280px;
     height: 200px;
+    border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #ffb300;
+  color: black;
+  border: none;
+  border-radius: 7px;
+}
+
+.btn-primary:hover {
+  background-color: #fc6f03;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 7px;
+}
+
+.btn-primary:active:focus {
+  background-color: #fc6f03 !important;
+  color: black !important;
+  border-color: none !important;
+  border-radius: 7px !important;
 }
 
 .row-header {
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 20px;
+    color: white;
+    opacity: 0.8;
 }
 
 .input-right-pad {
