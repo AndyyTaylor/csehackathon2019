@@ -39,8 +39,6 @@ module.exports = function suggest(body) {
   resp.push(200);
   //newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
   resp.push(newAppList);
-  console.log(resp[0]);
-  console.log(resp[1]);
   return resp;
 }
 
