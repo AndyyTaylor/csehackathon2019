@@ -20,7 +20,7 @@ class DetailView extends Component {
               </div>
               <div className="detail-info">
 
-              //       <h3>My Epic Fridge Title</h3>
+              <h3>My Epic Fridge Title</h3>
               //       <div className="price">$1,999
               //         <a href="#" className="btn btn-primary float-right">Buy Appliance</a>
               //       </div>
@@ -98,8 +98,10 @@ class DetailView extends Component {
               //   </div>
 
                     <h3>{this.props.appliance.title}</h3>
-                    <div>${this.props.appliance.price}</div>
-                    <div>{this.props.appliance.length}mm x {this.props.appliance.width}mm x {this.props.appliance.height}mm (L x W x H)</div>
+                    <div className="price">${this.props.appliance.price}
+                      <a href={this.props.appliance.productUrl} target="_blank" className="btn btn-primary">Buy Appliance</a>
+                    </div>
+                    <div className="size">{this.props.appliance.length}mm x {this.props.appliance.width}mm x {this.props.appliance.height}mm (L x W x H)</div>
 
                     {/* https://www.chartjs.org/docs/latest/ */}
                     {/* https://www.npmjs.com/package/react-chartjs-2 */}
@@ -118,8 +120,6 @@ class DetailView extends Component {
                                 }]
                             }
                         }}/>
-
-                  <a href={this.props.appliance.productUrl} target="_blank" className="btn btn-primary">Buy Appliance</a>
 
               </div>
           </div>

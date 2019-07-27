@@ -84,7 +84,7 @@ class ApplianceInputForm extends Component {
                     <div className="form-group row">
                       <label className="col-sm-4 col-form-label text-justify">Residing State</label>
                       <div className="col-sm-8">
-                          <select className="form-control" value={ this.state.type }>
+                          <select className="form-control" value={ this.state.residence }>
                               <option value="nsw">NSW</option>
                               <option value="qld">QLD</option>
                               <option value="nt">NT</option>
