@@ -13,9 +13,9 @@ class ApplianceInputForm extends Component {
             model: undefined,
             type: undefined,
             consumption: undefined,
-            length: undefined,
-            width: undefined,
-            height: undefined
+            length: 0,
+            width: 0,
+            height: 0
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -35,6 +35,10 @@ class ApplianceInputForm extends Component {
 
         console.log('submitted');
         console.log(this.state);
+
+        this.setState({ detail: this.props.detail });
+
+        this.props.handleSubmit(this.state);
     }
 
     render() {
@@ -81,7 +85,7 @@ class ApplianceInputForm extends Component {
                     { this.props.detail &&
                         <>
                         <div className="form-group row">
-                            <label className="col-sm-4 col-form-label text-justify">Energy Consumption</label>
+                            <label className="col-sm-4 col-form-label text-justify">Consumption</label>
                             <div className="col-sm-8">
                                 <input type="text" className="form-control" value={ this.state.consumption } onChange={ (e) => this.handleChange(e, 'consumption') } />
                             </div>
@@ -91,6 +95,20 @@ class ApplianceInputForm extends Component {
                             <label className="col-sm-4 col-form-label text-justify">Length</label>
                             <div className="col-sm-8">
                                 <input type="number" className="form-control" value={ this.state.length } onChange={ (e) => this.handleChange(e, 'length') } />
+                            </div>
+                        </div>
+
+                        <div className="form-group row">
+                            <label className="col-sm-4 col-form-label text-justify">Width</label>
+                            <div className="col-sm-8">
+                                <input type="number" className="form-control" value={ this.state.width } onChange={ (e) => this.handleChange(e, 'width') } />
+                            </div>
+                        </div>
+
+                        <div className="form-group row">
+                            <label className="col-sm-4 col-form-label text-justify">Height</label>
+                            <div className="col-sm-8">
+                                <input type="number" className="form-control" value={ this.state.height } onChange={ (e) => this.handleChange(e, 'height') } />
                             </div>
                         </div>
                         </>
