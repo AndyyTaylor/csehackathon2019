@@ -45,7 +45,11 @@ class App extends Component {
                     console.log('suggest');
                     console.log(response);
 
-                    this.setState({ suggested: response.data[0], screen: 'results' });
+                    if (response.data[0].length == 0) {
+                        this.setState({ detail: false, screen: 'inputform'});
+                    } else {
+                        this.setState({ suggested: response.data[0], screen: 'results' });
+                    }
                 }).catch((error) => {
                     console.log('suggest');
                     console.log(error);
@@ -57,6 +61,22 @@ class App extends Component {
             }).finally(() => {
                 this.setState({ loading: false });
             });
+        } else {
+            axios.post('http://localhost:5000/suggest',
+                data
+            ).then((response) => {
+                console.log('suggest');
+                console.log(response);
+
+                if (response.data[0].length == 0) {
+                    this.setState({ detail: false, screen: 'inputform'});
+                } else {
+                    this.setState({ suggested: response.data[0], screen: 'results' });
+                }
+            }).catch((error) => {
+                console.log('suggest');
+                console.log(error);
+            })
         }
     }
 

@@ -251,13 +251,8 @@ h1 {
 }
 
 .detail-img-container {
-<<<<<<< HEAD
-  width: 500px;
-  height: 600px;
-=======
   width: 400px;
   height: 440px;
->>>>>>> 050b74eaa5be9993f3fc1a4e6753688a1570ecec
 
   border: none;
 }
