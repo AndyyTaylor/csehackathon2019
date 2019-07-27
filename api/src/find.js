@@ -1,7 +1,6 @@
 const process = require('process');
 module.exports = function find(body){
-  var input = body;
-  var oldAppliance = input.appliance[0];
+  var oldAppliance = body;
   let resp = [];
 
   let json = require(process.cwd() + '/' + oldAppliance.type + '.json');
