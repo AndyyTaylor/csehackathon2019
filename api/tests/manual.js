@@ -3,10 +3,10 @@ const assert = require('assert');
 request.post('http://localhost:5000/suggest', {
                 json: {
                     energyCost: 0.302,
-                    Appliances: [{
-                      type: 'Fridge',
-                      company: 'FridgeCo',
-                      model: 'MAO123URA8'
+                    appliance: [{
+                      type: 'fridge',
+                      company: 'FridgeCo88',
+                      model: 'AOAO23109AOE24'
                     }]
                 }
             }, function(err,res,body){
@@ -15,6 +15,6 @@ request.post('http://localhost:5000/suggest', {
                 console.log(err);
               }
               else{
-              console.log(res);
+              console.log("POST SENT");
               }
             });

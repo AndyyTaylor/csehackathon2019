@@ -14,10 +14,12 @@ app.use(function(req, res, next) {
 });
 
 // TODO add route & method handlers here
+
+//POST /suggest will call suggest API
 app.post('/suggest', function (req, res) {
   let body = req.body;
-  res.send('200\nbody');
-  suggest(body);
+  let resp = suggest(body);
+  res.status(resp[0]).send(resp[1]);
 });
 
 app.listen(PORT, () => {
