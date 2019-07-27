@@ -4,6 +4,7 @@ import './App.css';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import DetailView from './components/DetailView';
 import ApplianceInputForm from './components/ApplianceInputForm';
 import ResultsRow from './components/ResultsRow';
 
@@ -39,10 +40,15 @@ class App extends Component {
             <div className="App">
                 <Header />
 
+<<<<<<< HEAD
+                <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
+                <DetailView/>
+=======
                 { pageBody }
 
                 {/* <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
                 <DetailView/> */}
+>>>>>>> 6ad5cdbcd55730caa57e299d403381065cc09a4d
                 <Footer/>
             </div>
         );
