@@ -1,8 +1,6 @@
 module.exports = function suggest(body) {
-  var input = body;
-  var oldAppliance = input.appliance[0];
+
   let newAppList = [];
-  let resp = [];
 
   //Check to see if customer gave energy bill cost, if not set to default
   if(!input.energyCost){
@@ -12,27 +10,14 @@ module.exports = function suggest(body) {
     let energyCost = input.energyCost;
   }
 
-  let json = require('./appliance_data/' + oldAppliance.type + '.json');
 
-  for(let i = 0; i < json.length; i++){
-    var appliance = json[i];
 
-    if (oldAppliance.model == appliance.model && oldAppliance.company == appliance.company){
-      oldAppliance = appliance;
-      break;
-    }
-  }
 
-  if(!oldAppliance.energyConsumption){
-    resp.push(204);
-    console.log(resp[0]);
-    return resp;
-  }
   else{
     for(let i = 0; i < json.length; i++){
       var appliance = json[i];
 
-      if(appliance.energyConsumption < oldAppliance.energyConsumption){
+      if(appliance.energyConsumption < oldAppliance.energyConsumption && appliance.volume){
         newAppList.push(appliance);
       }
     }
