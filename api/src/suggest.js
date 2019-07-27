@@ -1,50 +1,48 @@
-// module.exports = function suggest(body) {
-//
-//   let newAppList = [];
-//
-//   //Check to see if customer gave energy bill cost, if not set to default
-//   if(!input.energyCost){
-//     let energyCost = 0.307;
-//   }
-//   else{
-//     let energyCost = input.energyCost;
-//   }
-/*
-    for(let i = 0; i < json.length; i++){
-      var appliance = json[i];
+module.exports = function suggest(body) {
+  let oldAppliance = body;
+  let newAppList = [];
+  let json = require(process.cwd() + '/' + oldAppliance.type + '.json');
+  let resp = [];
 
-      if(appliance.energyConsumption < oldAppliance.energyConsumption && appliance.volume){
-        newAppList.push(appliance);
-      }
-    }
+  let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
+
+  //Check to see if customer gave energy bill cost, if not set to default
+  if(!oldAppliance.energyCost){
+    let energyCost = 0.307;
+  }
+  else{
+    let energyCost = oldAppliance.energyCost;
   }
 
-  newAppList.sort(function (a,b){return a.energyConsumption - b.energyConsumption});
+  if (!oldAppliance.state){
+    let state = 'NSW';
+  }
+  else{
+    let state = oldAppliance.state;
+  }
+
+  for(let i = 0; i < json.length; i++){
+    var appliance = json[i];
+    let newVolume = appliance.length * appliance.width * appliance.height;
+
+      if (Number(appliance.stars) > Number(oldAppliance.stars)){
+        if (newVolume <= oldVolume + 0.2*oldVolume){
+          if (newVolume >= oldVolume - 0.2*oldVolume){
+            newAppList.push(appliance);
+          }
+        }
+      }
+    }
+
+  newAppList.sort(function (a,b){return Number(b.stars) - Number(a.stars)});
 
   resp.push(200);
+  //newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
   resp.push(newAppList);
-  resp.push(powerSave(oldAppliance, newAppList[0], energyCost));
-  resp.push(greenHouse(oldAppliance, newAppList[0], 'NSW'))
-  console.log(resp[0]);
   return resp;
 }
 
-function powerSave(oldApp, topApp, energyCost){
-  powerInfo = []
-
-  oldPowerCost = energyCost * oldApp.energyConsumption;
-  powerInfo.push(oldPowerCost);
-
-  newPowerCost = energyCost * newApp.energyConsumption;
-  powerInfo.push(newPowerCost);
-
-  priceDiff = oldPowerCost - newPowerCost;
-  powerInfo.push(priceDiff);
-
-  return powerInfo;
-}
-
-function greenHouse(oldApp, topApp, state){
+function savingsInfo(oldApp, newAppList, energyCost, state){
   var state_EF = {
     "VIC" : 1.17,
     "WA" : 0.78,
@@ -55,19 +53,28 @@ function greenHouse(oldApp, topApp, state){
     "TAS" : 0.20,
     "NT" : 0.69
     //data taken from: https://coolaustralia.org/wp-content/uploads/2013/12/Calculating-GHG-emissions.pdf
+    // Carbon values are in GHG (CO2 in kg)
   };
 
-  carbonInfo = []
-  // Carbon values are in GHG (CO2 in kg)
+  oldPowerCost = energyCost * oldApp.energyConsumption;
   oldCarbon = state_EF.state * oldApp.energyConsumption;
-  carbonInfo.push(oldCarbon);
 
-  newCarbon = state_EF.state * newApp.energyConsumption;
-  carbonInfo.push(newCarbon);
+  for(let i = 0; i < newAppList.length; i++){
+    newApp = newAppList[i];
 
-  carbonDiff = oldCarbon - newCarbon;
-  carbonInfo.push(carbonDiff);
+    newPowerCost = energyCost * newApp.energyConsumption;
+    priceDiff = oldPowerCost - newPowerCost;
 
-  return carbonInfo;
+    newCarbon = state_EF.state * newApp.energyConsumption;
+    carbonDiff = oldCarbon - newCarbon;
+
+    newApp['New Power Cost'] = newPowerCost;
+    newApp['Price Cost Difference'] = priceDiff;
+    newApp['New Carbon Footprint'] = newCarbon;
+    newApp['Carbon Footpring Difference'] = carbonDiff;
+
+    newAppList[i] = newApp;
+  }
+
+  return newAppList;
 }
-*/

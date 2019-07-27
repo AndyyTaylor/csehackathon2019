@@ -16,7 +16,8 @@ class App extends Component {
 
         this.state = {
             detail: false,
-            screen: 'results',
+            screen: 'inputform',
+            selectedInd: 0,
             loading: false
         }
 
@@ -36,7 +37,19 @@ class App extends Component {
             }).then((response) => {
                 console.log(response);
 
-                this.setState({ screen: 'results' });
+                const fridge = response.data;
+                fridge.type = data.type;
+                axios.post('http://localhost:5000/suggest',
+                    fridge
+                ).then((response) => {
+                    console.log('suggest');
+                    console.log(response);
+
+                    this.setState({ suggested: response.data[0], screen: 'results' });
+                }).catch((error) => {
+                    console.log('suggest');
+                    console.log(error);
+                })
             }).catch((error) => {
                 console.log(error);
 
@@ -52,8 +65,9 @@ class App extends Component {
         if (this.state.screen == 'inputform') {
             pageBody.push(<ApplianceInputForm loading={ this.state.loading } detail={ this.state.detail } handleSubmit={ this.handleSubmit } />);
         } else if (this.state.screen == 'results') {
-            pageBody.push(<DetailView />);
-            pageBody.push(<ResultsRow />);
+            console.log(this.state.suggested);
+            pageBody.push(<DetailView appliance={ this.state.suggested[this.state.selectedInd] } />);
+            pageBody.push(<ResultsRow onSelectAppliance={(i) => this.setState({ selectedInd: i }) } appliances={ this.state.suggested } />);
         }
 
         return (

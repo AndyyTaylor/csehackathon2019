@@ -155,6 +155,8 @@ h1 {
     background-color: black;
     border-radius: 20px;
 
+    text-align: justify;
+
     padding-bottom: 10px;
 }
 
@@ -164,12 +166,19 @@ h1 {
     margin-bottom: 10px;
     border-radius: 10px;
     vertical-align: top;
+    width: 280px;
+    overflow: hidden;
 }
 
 .results-image {
-    width: 280px;
+    /* width: 280px; */
     height: 200px;
     border-radius: 10px;
+    max-width: 280px;
+    display: block;
+    margin-right: auto;
+    width: auto;
+    margin-left: auto;
 }
 
 .btn-primary:default {
@@ -237,13 +246,18 @@ h1 {
 }
 
 .detail-image {
-  max-height: 100%;
+  height: 100%;
   max-width: 100%;
 }
 
 .detail-img-container {
+<<<<<<< HEAD
   width: 500px;
   height: 600px;
+=======
+  width: 400px;
+  height: 440px;
+>>>>>>> 050b74eaa5be9993f3fc1a4e6753688a1570ecec
 
   border: none;
 }

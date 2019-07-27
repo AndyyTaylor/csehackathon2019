@@ -3,10 +3,10 @@ const fs = require('fs');
 
 const products = require('./products.json');
 
-const validProducts = [];
+const byType = {};
 for (let i = 0; i < products.length; i++) {
     const keys = Object.keys(products[i]);
-    let valid = true;
+    let valid = keys.includes('title') && keys.includes('image') && keys.includes('price');
     for (let j = 0; j < keys.length; j++) {
         if (!products[i][keys[j]]) {
             valid = false;
@@ -16,9 +16,21 @@ for (let i = 0; i < products.length; i++) {
     }
 
     if (valid) {
-        validProducts.push(products[i]);
+        if (!Object.keys(byType).includes(products[i].type)) {
+            byType[products[i].type] = [];
+        }
+
+        byType[products[i].type].push(products[i]);
     }
 }
 
-console.log(`${validProducts.length} valid products found (out of ${products.length})`);
-fs.writeFileSync('./validproducts.html', JSON.stringify(validProducts));
+let total = 0;
+for (let i = 0; i < Object.keys(byType).length; i++) {
+    const type = Object.keys(byType)[i];
+    console.log(`${type} x ${byType[type].length}`);
+    total += byType[type].length;
+
+    fs.writeFileSync(`./${type}.json`, JSON.stringify(byType[type]));
+}
+console.log(`${total} valid products found (out of ${products.length})`);
+// fs.writeFileSync('./validproducts.html', JSON.stringify(validProducts));

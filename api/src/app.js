@@ -24,10 +24,9 @@ app.post('/find', function(req, res){
 
 //Suggest gives appliance suggestions
 app.post('/suggest', function (req, res) {
-  console.log("suggest active");
-  // let body = req.body;
-  // let resp = suggest(body);
-  // res.status(resp[0]).send(resp.slice(1,4));
+   let body = req.body;
+   let resp = suggest(body);
+   res.status(resp[0]).send(resp.slice(1,4));
 });
 
 app.listen(PORT, () => {

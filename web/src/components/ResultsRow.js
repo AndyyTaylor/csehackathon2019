@@ -11,14 +11,15 @@ class Header extends Component {
 
 		render() {
 			const appliances = [];
-			for (let i = 0; i < 20; i++) {
+			for (let i = 0; i < this.props.appliances.length; i++) {
+				const appliance = this.props.appliances[i];
 				appliances.push(
 					<div className="card results-item">
-						<img className="card-img-top results-image" src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081" />
+						<img className="card-img-top results-image" src={appliance.image} />
 						<div className="card-body">
-							<h5 className="card-title">Appliance Title</h5>
-							<p className="card-text">$1,999</p>
-							<a href="#" className="btn btn-primary">Show Details</a>
+							<h5 className="card-title">{appliance.title}</h5>
+							<p className="card-text">${appliance.price}</p>
+							<a href="#" onClick={(e) => { e.preventDefault(); this.props.onSelectAppliance(i); }} className="btn btn-primary">Show Details</a>
 						</div>
 					</div>
 				);
