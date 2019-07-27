@@ -40,15 +40,9 @@ class App extends Component {
             <div className="App">
                 <Header />
 
-<<<<<<< HEAD
                 <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
-                <DetailView/>
-=======
+                {/*<DetailView/>*/}
                 { pageBody }
-
-                {/* <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
-                <DetailView/> */}
->>>>>>> 6ad5cdbcd55730caa57e299d403381065cc09a4d
                 <Footer/>
             </div>
         );

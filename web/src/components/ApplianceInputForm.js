@@ -92,6 +92,11 @@ class ApplianceInputForm extends Component {
 
                     { this.props.detail &&
                         <>
+                        <div className="alert">
+                          <span className="closebtn" onclick="alert.style.display='none';">
+                          </span>
+                          <strong>Sorry!</strong> Your appliance could not be identified. Please enter more information.
+                        </div>
                         <div className="form-group row">
                             <label className="col-sm-4 col-form-label text-justify">Consumption</label>
                             <div className="col-sm-8">
