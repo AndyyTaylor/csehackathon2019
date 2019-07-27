@@ -6,6 +6,82 @@ const fs = require('fs');
 
 const websites = [
     {
+        name: 'JB Hi Fi',
+        baseUrl: 'https://www.jbhifi.com.au',
+        searchUrl: 'https://www.jbhifi.com.au/home-appliances/{type}/?p={page}&s=releaseDate&sd=2&fc=brand%3A%3A{brand}%3B&mf=brand&fm=false',
+        filters: [
+            {
+                name: 'page',
+                values: [
+                    1
+                ]
+            }, {
+                name: 'brand',
+                values: [
+                    'ASKO',
+                    'WESTINGHOUSE',
+                    'HISENSE',
+                    'LG',
+                    'SAMGSUNG',
+                    'FISHER%20%26%20PAYKEL',
+                    'ELECTROLUX',
+                    'VINTEC',
+                    'BEKO',
+                    'HAIER',
+                    'KELVINATOR'
+                ]
+            }, {
+                name: 'type',
+                values: [
+                    'clothes-dryers',
+                    'dishwashers',
+                    'all-fridges'
+                ]
+            }
+        ], selectors: [
+            {
+                name: 'productUrl',
+                css: ['#productsContainer > ul > li.row.load-more-results > div:nth-child(n) > div > a.link']
+            }, {
+                name: 'title',
+                css: '#main > div.container > div.structure.overview > div.primary.av-content > div > h1'
+            }, {
+                name: 'model',
+                css: '#main > div.container > div.structure.overview > div.primary.av-content > div > div.prod-code > h2',
+                regex: /\s(\w|\d)+/
+            }, {
+                type: 'image',
+                name: 'image',
+                css: '#main > div.container > div.structure.overview > div.primary.av-content > div > div.gallery > div.image > img'
+            }, {
+                name: 'company',
+                css: '#main > div.container > div.structure.overview > div.primary.av-content > div > div.brand > img',
+                location: 'alt'
+            }, {
+                type: 'table',
+                rowcss: '#tab2 > div > ul > p:nth-child(n)',
+                colcss: 'div',
+                mapping: {
+                    'product width (mm)': {
+                        name: 'width',
+                        regex: /\d+/
+                    }, 'product height (mm)': {
+                        name: 'height',
+                        regex: /\d+/
+                    }, 'product depth (mm)': {
+                        name: 'length',
+                        regex: /\d+/
+                    }, 'energy star rating': {
+                        name: 'stars',
+                        regex: /\d(\.\d)?/
+                    }, 'capacity (litres)': {
+                        name: 'volume',
+                        regex: /\d+/
+                    }
+                }
+            }
+        ]
+    }, {
         name: 'Appliances Online',
         baseUrl: 'https://www.appliancesonline.com.au',
         searchUrl: 'https://www.appliancesonline.com.au/filter/{type}/?brand={brand}&isgridview=true&currentpage={page}&sortkey=lowestprice',
@@ -179,7 +255,7 @@ function scrapeFeedPage(site, filterIndex) {
             }
 
             // console.log(body);
-            // fs.writeFileSync('./scrape.html', body.html);
+            fs.writeFileSync('./scrape.html', body.html);
             let $;
             try {
                 $ = cheerio.load(body.html);
@@ -200,7 +276,7 @@ function scrapeFeedPage(site, filterIndex) {
 
                         data.push(href);
                     }
-                    console.log(href);
+                    // console.log(href);
                 });
 
                 ind += 1;
@@ -263,15 +339,22 @@ function scrapeProductPage(site, productUrl, type, callback) {
                 }
             } else if (selector.type == 'table') {
                 const table = [];
+                // console.log(selector.rowcss);
                 $(selector.rowcss).each(function(i, elem) {
                     let key, val;
                     $(this).children().each((i, elem2) => {
                         if (!key) {
                             key = $(elem2).text().trim().toLowerCase();
+                            // console.log(elem2.nextSibling);
+                            if (elem2.nextSibling && elem2.nextSibling.type == 'text') {
+                                val = elem2.nextSibling.data;
+                            }
                         } else {
                             val = $(elem2).text().trim().toLowerCase();
                         }
                     });
+
+                    // console.log(key, val);
 
                     if (Object.keys(selector.mapping).includes(key)) {
                         if (selector.mapping[key].regex) {
@@ -283,7 +366,17 @@ function scrapeProductPage(site, productUrl, type, callback) {
 
             } else {
                 if (typeof selector.css == 'string') {
-                    data[selector.name] = $(selector.css).eq(0).text().trim();
+                    if (selector.location) {
+                        data[selector.name] = $(selector.css).eq(0).attr(selector.location);
+                    } else {
+                        data[selector.name] = $(selector.css).eq(0).text();
+                    }
+
+                    if (selector.regex) {
+                        data[selector.name] = data[selector.name].match(selector.regex)[0];
+                    }
+
+                    data[selector.name] = data[selector.name].trim().toLowerCase();
                 } else {
                     let ind = 0;
                     while (!data[selector.name] && ind < selector.css.length) {
@@ -298,20 +391,21 @@ function scrapeProductPage(site, productUrl, type, callback) {
 
         data.type = type;
         console.log('#', productUrl);
-        console.log(data);
+        // console.log(data);
 
         callback(null, data);
     });
 }
 
 async function runner() {
+    let products = [];
+
     for (let i = 0; i < websites.length; i++) {
         const site = websites[i];
         console.log('=== Scraping', site.name);
 
         const filterIndex = site.filters.map(() => { return 0 });
         let cont = true;
-        let products = [];
         while (cont) {
             const { productLinks, type } = await scrapeFeedPage(site, filterIndex);
 
@@ -324,7 +418,7 @@ async function runner() {
                 }
 
                 products = products.concat(res);
-                console.log(products);
+                console.log(`${products.length} found so far`);
             });
 
             cont = incrementFilters(site, filterIndex);
