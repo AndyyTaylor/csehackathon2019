@@ -14,7 +14,7 @@ class App extends Component {
 
         this.state = {
             detail: false,
-            screen: 'results'
+            screen: 'inputform'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);

@@ -141,3 +141,18 @@ h1 {
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
+.input-right-pad {
+    padding-right: 20px;
+}
+
+.no-spinners {
+    -moz-appearance:textfield;
+}
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
