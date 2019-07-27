@@ -46,6 +46,10 @@ const websites = [
                 name: 'title',
                 css: '#main > div.container > div.structure.overview > div.primary.av-content > div > h1'
             }, {
+                name: 'price',
+                css: '#main > div.container > div.structure.overview > div.secondary > div > p > span.amount',
+                regex: /\d+/
+            }, {
                 name: 'model',
                 css: '#main > div.container > div.structure.overview > div.primary.av-content > div > div.prod-code > h2',
                 regex: /\s(\w|\d)+/
@@ -177,7 +181,8 @@ const websites = [
                 name: 'image',
                 type: 'image',
                 css: [
-                    '#page-container > aol-product-page-container > aol-product-page > ul > li:nth-child(1) > div > aol-product-page-content-top > aol-product-page-content-top-a > div > div.content > div.product-view > div > aol-product-attribute-badges > ul > li:nth-child(1) > img',
+                    // '#page-container > aol-product-page-container > aol-product-page > ul > li:nth-child(1) > div > aol-product-page-content-top > aol-product-page-content-top-a > div > div.content > div.product-view > div > aol-product-attribute-badges > ul > li:nth-child(1) > img',
+                    '#page-container > aol-product-page-container > aol-product-page > ul > li:nth-child(1) > div > aol-product-page-content-top > aol-product-page-content-top-a > div > div.content > div.product-view > aol-product-media-gallery > section > aol-product-media-gallery-main-image-portal > div > div > div > aol-product-media-gallery-item > div > img',
                     '#page-container > aol-product-page-container > aol-product-page > ul > li:nth-child(1) > div > aol-product-page-content-top > aol-product-page-content-top-b > div > div > div.media-gallery > aol-product-media-gallery > section > aol-product-media-gallery-main-image-portal > div > div > div:nth-child(1) > aol-product-media-gallery-item > div > img'
                 ]
             }, {
@@ -391,7 +396,7 @@ function scrapeProductPage(site, productUrl, type, callback) {
 
         data.type = type;
         console.log('#', productUrl);
-        // console.log(data);
+        console.log(data);
 
         callback(null, data);
     });
