@@ -42,6 +42,8 @@ module.exports = function suggest(body) {
 
   resp.push(200);
   resp.push(newAppList);
+  resp.push(powerSave(oldAppliance, newAppList[0], energyCost));
+  resp.push(greenHouse(oldAppliance, newAppList[0], 'NSW'))
   console.log(resp[0]);
   return resp;
 }

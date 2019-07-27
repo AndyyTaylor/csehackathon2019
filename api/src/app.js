@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 app.post('/suggest', function (req, res) {
   let body = req.body;
   let resp = suggest(body);
-  res.status(resp[0]).send(resp[1]);
+  res.status(resp[0]).send(resp.slice(1,4));
 });
 
 app.listen(PORT, () => {
