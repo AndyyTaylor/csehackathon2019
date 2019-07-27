@@ -26,8 +26,8 @@ module.exports = function suggest(body) {
     let newVolume = appliance.length * appliance.width * appliance.height;
 
       if (Number(appliance.stars) > Number(oldAppliance.stars)){
-        if (newVolume <= oldVolume + 0.1*oldVolume){
-          if (newVolume >= oldVolume - 0.1*oldVolume){
+        if (newVolume <= oldVolume + 0.2*oldVolume){
+          if (newVolume >= oldVolume - 0.2*oldVolume){
             newAppList.push(appliance);
           }
         }

@@ -153,6 +153,8 @@ h1 {
     background-color: black;
     border-radius: 20px;
 
+    text-align: justify;
+
     padding-bottom: 10px;
 }
 
@@ -162,6 +164,8 @@ h1 {
     margin-bottom: 10px;
     border-radius: 10px;
     vertical-align: top;
+    width: 280px;
+    overflow: hidden;
 }
 
 .results-image {
@@ -229,13 +233,13 @@ h1 {
 }
 
 .detail-image {
-  max-height: 100%;
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .detail-img-container {
   width: 400px;
-  height: 360px;
+  height: 440px;
 
   border-width: 5px;
   border-color: lightblue;
