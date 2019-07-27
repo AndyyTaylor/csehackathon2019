@@ -1,4 +1,4 @@
-
+const suggest = require('./suggest');
 const bodyParser = require('body-parser');
 const express = require('express');
 
@@ -14,6 +14,11 @@ app.use(function(req, res, next) {
 });
 
 // TODO add route & method handlers here
+app.post('/suggest', function (req, res) {
+  let body = req.body;
+  res.send('200\nbody');
+  suggest(body);
+});
 
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
