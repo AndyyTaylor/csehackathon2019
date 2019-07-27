@@ -45,6 +45,10 @@ class ApplianceInputForm extends Component {
         return (
             <form onSubmit={ this.handleSubmit }>
 
+              <div className="appliance_deets">
+                <h1>Please enter your appliance details:</h1>
+                <div className="blankspace">
+                </div>
                 <div className="appliance_container">
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label text-justify">Energy Cost</label>
@@ -60,6 +64,10 @@ class ApplianceInputForm extends Component {
                             <select className="form-control">
                                 <option value="fridge">Fridge</option>
                                 <option value="dishwasher">Dishwasher</option>
+                                <option value="microwave">Microwave</option>
+                                <option value="airconditioner">Air Conditioner</option>
+                                <option value="dryer">Dryer</option>
+                                <option value="tv">Television</option>
                             </select>
                         </div>
                     </div>
@@ -122,10 +130,12 @@ class ApplianceInputForm extends Component {
 
                     <input type="submit" value="Submit" className="btn btn-primary float-right"/>
                 </div>
+              </div>
             </form>
         )
     }
 
 }
+
 
 export default ApplianceInputForm;

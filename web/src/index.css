@@ -9,6 +9,33 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+h1 {
+  color: white;
+  font-size: 50px;
+}
+
+.separator {
+  overflow: hidden;
+  margin-bottom: 30px;
+  background-color: #ffe400;
+}
+
+.separator .search-container {
+  float: right;
+}
+
+.separator.form.searchbar input[type=text] {
+  float: right;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+.separator.form.searchbar button {
+  float: right;
+  padding: 8px 12px 8px;
+  cursor: pointer;
+}
+
 .header {
   overflow: hidden;
   background-color: black;
@@ -27,7 +54,7 @@ code {
 }
 
 .header a.logo {
-  font-size: 35px;
+  font-size: 50px;
   font-weight: bold;
 }
 
@@ -41,8 +68,26 @@ code {
   color: black;
 }
 
+.header-center {
+  float: center;
+}
+
 .header-right {
   float: right;
+}
+
+.appliance_deets {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding: 50px 50px 450px;
+  border-radius: 20px;
+  background-image: url(city1.jpg);
+}
+
+.blankspace {
+  margin-bottom: 30px;
 }
 
 .appliance_container {
@@ -52,14 +97,18 @@ code {
     width: 400px;
 
     padding: 15px;
+    background-color: #ffe400;
 
-    border-width: 5px;
-    border-style: solid;
-    border-color: lightblue;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .align_right {
     display: inline-block;
     text-align: right;
+}
+
+.footer {
+  margin-top: 20px;
+  overflow: hidden;
+  padding: 10px;
 }
