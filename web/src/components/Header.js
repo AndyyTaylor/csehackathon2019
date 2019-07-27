@@ -12,9 +12,14 @@ class Header extends Component {
 
     render() {
         return (
-            <p>
-                // Carey fill this out and make it look like an actual header on a proper website :))
-            </p>
+          <div class = "header">
+            <a href = "#default" class = "logo">DollarWatt$</a>
+            <div class = "header-right">
+              <a class = "active" href = "#home">Home</a>
+              <a href = "#about">About</a>
+              <a href = "#contact">Contact</a>
+            </div>
+          </div>
         )
     }
 
