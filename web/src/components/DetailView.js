@@ -19,6 +19,7 @@ class DetailView extends Component {
                 <img className="rounded detail-image" src={this.props.appliance.image} />
               </div>
               <div className="detail-info">
+                    <h2 className="text-nowrap">{this.props.appliance.title}</h2>
                     <div className="price">${this.props.appliance.price}
                        <a href={this.props.appliance.productUrl} target="_blank" className="btn btn-primary float-right">Buy Appliance</a>
                      </div>
@@ -26,8 +27,9 @@ class DetailView extends Component {
 
                      {/* https:www.chartjs.org/docs/latest/ */}
                      {/* https:www.npmjs.com/package/react-chartjs-2 */}
+                     <div style={{ display: 'inline' }}>
                      <div className="bargraph">
-                       <Bar width={100} height={50} data={{
+                       <Bar width={100} height={200} data={{
                                labels: ['Old kWh', 'Old CO2', 'New kWh', 'New CO2'],
                                datasets: [{
                                    //label: 'Efficiency and Emission Comparison',
@@ -40,6 +42,7 @@ class DetailView extends Component {
                                    ]
                                }]
                            }} options={{
+                               maintainAspectRatio: false,
                                scales: {
                                    yAxes: [{
                                        ticks: {
@@ -52,17 +55,18 @@ class DetailView extends Component {
                            }}/>
                      </div>
                      <div className="linegraph">
-                       <Line width={100} height={50} data={{
-                               labels: ['Now', 'In 1 yr', 'In 5 yrs', 'In 10 yrs'],
+                       <Line width={100} height={100} data={{
+                               labels: ['Now', 'Savings In 5 yrs', 'Savings In 10 yrs'],
                                datasets: [{
                                    label: 'Cost Savings???',
-                                   data: [0, this.props.appliance.savingsOne, this.props.appliance.savingsFive, this.props.appliance.savingsTen],
+                                   data: [0, this.props.appliance.savingsFive, this.props.appliance.savingsTen],
                                    borderColor: [
                                        'rgba(0,0,0,0.7)'
                                    ],
                                    pointBackgroundColor:'rgba(0, 0, 0, 0.7)'
                                }]
                            }} options={{
+                                maintainAspectRatio: false,
                                scales: {
                                    yAxes: [{
                                        ticks: {
@@ -74,8 +78,9 @@ class DetailView extends Component {
                                }
                            }}/>
                      </div>
+                     </div>
                </div>
-               <div className="refine">
+               {/* <div className="refine">
                  <button onclick="myFunction()" className="dropbtn">REFINE SEARCH</button>
                  <div id="myDropdown" class="dropdown-content">
                    <div className="form-group row">
@@ -97,8 +102,8 @@ class DetailView extends Component {
                        </div>
                    </div>
 
-                 </div>
-              </div>
+                 </div> */}
+              {/* </div> */}
           </div>
 
       )

@@ -261,6 +261,9 @@ h1 {
 .detail-info {
   margin-left: 10px;
   margin-right: 50px;
+
+  height: 400px;
+  width: 1000px;
 }
 
 h3 {
@@ -274,6 +277,7 @@ h3 {
   font-size: 25px;
   border-radius: 8px;
   margin-bottom: 3px;
+  padding-left: 120px;
 }
 
 .size {
@@ -281,7 +285,19 @@ h3 {
 }
 
 .bargraph {
+  display: inline-block;
+  vertical-align: top;
   margin-bottom: 15px;
+  width: 450px;
+  height: 200px;
+}
+
+.linegraph {
+  display: inline-block;
+  vertical-align: top;
+  width: 450px;
+  height: 200px;
+  margin-left: 50px;
 }
 
 .refine {
