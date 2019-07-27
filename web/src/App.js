@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 import Header from './components/Header';
+import ApplianceInputForm from './components/ApplianceInputForm';
 
-function App() {
-    return (
-        <div className="App">
-            <Header />
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-                Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Learn React
-            </a>
-        </div>
-    );
+class App extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            detail: false
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(data) {
+        if (!data.detail) {
+            this.setState({ detail: true });
+        }
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <Header />
+
+                <ApplianceInputForm detail={ this.state.detail } handleSubmit={ this.handleSubmit } />
+            </div>
+        );
+    }
 }
 
 export default App;
