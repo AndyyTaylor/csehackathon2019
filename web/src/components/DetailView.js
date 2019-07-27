@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 class DetailView extends Component {
 
@@ -19,30 +20,88 @@ class DetailView extends Component {
               </div>
               <div className="detail-info">
                     <h3>{this.props.appliance.title}</h3>
-                    <div>${this.props.appliance.price}</div>
-                    <div>{this.props.appliance.length}mm x {this.props.appliance.width}mm x {this.props.appliance.height}mm (L x W x H)</div>
+                    <div className="price">${this.props.appliance.price}
+                       <a href={this.props.appliance.productUrl} target="_blank" className="btn btn-primary float-right">Buy Appliance</a>
+                     </div>
+                     <div className="size">{this.props.appliance.length}mm x {this.props.appliance.width}mm x {this.props.appliance.height}mm (L x W x H)</div>
 
-                    {/* https://www.chartjs.org/docs/latest/ */}
-                    {/* https://www.npmjs.com/package/react-chartjs-2 */}
-                    <Bar width={100} height={50} data={{
-                            labels: ['Old kwh', 'Old co2', 'New kwh', 'New co2'],
-                            datasets: [{
-                                label: 'Energy',
-                                data: [40, 50, 10, 20]
-                            }]
-                        }} options={{
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
-                        }}/>
+                     {/* https:www.chartjs.org/docs/latest/ */}
+                     {/* https:www.npmjs.com/package/react-chartjs-2 */}
+                     <div className="bargraph">
+                       <Bar width={100} height={50} data={{
+                               labels: ['Old kWh', 'Old CO2', 'New kWh', 'New CO2'],
+                               datasets: [{
+                                   //label: 'Efficiency and Emission Comparison',
+                                   data: [this.props.appliance.oldPower, this.props.appliance.oldCarbonFootprint, this.props.appliance.newPower, this.props.appliance.newCarbonFootprint],
+                                   backgroundColor: [
+                                       'rgba(0,0,0,0.7)',
+                                       'rgba(242,204,0,0.85)',
+                                       'rgba(0,0,0,0.7)',
+                                       'rgba(242,204,0,0.85)'
+                                   ]
+                               }]
+                           }} options={{
+                               scales: {
+                                   yAxes: [{
+                                       ticks: {
+                                           beginAtZero: true
+                                       }
+                                   }]
+                               }, legend: {
+                                   display: false
+                               }
+                           }}/>
+                     </div>
+                     <div className="linegraph">
+                       <Line width={100} height={50} data={{
+                               labels: ['Now', 'In 1 yr', 'In 5 yrs', 'In 10 yrs'],
+                               datasets: [{
+                                   label: 'Cost Savings???',
+                                   data: [0, this.props.appliance.savingsOne, this.props.appliance.savingsFive, this.props.appliance.savingsTen],
+                                   borderColor: [
+                                       'rgba(0,0,0,0.7)'
+                                   ],
+                                   pointBackgroundColor:'rgba(0, 0, 0, 0.7)'
+                               }]
+                           }} options={{
+                               scales: {
+                                   yAxes: [{
+                                       ticks: {
+                                           beginAtZero: true
+                                       }
+                                   }]
+                               }, legend: {
+                                   display: false
+                               }
+                           }}/>
+                     </div>
+               </div>
+               <div className="refine">
+                 <button onclick="myFunction()" className="dropbtn">REFINE SEARCH</button>
+                 <div id="myDropdown" class="dropdown-content">
+                   <div className="form-group row">
+                       <label className="col-sm-4 col-form-label text-justify">Budget</label>
+                       <div className="col-sm-8">
+                           <input type="number" className="form-control" value={ this.state.budget } onChange={ (e) => this.handleChange(e, 'energyCost') } />
+                       </div>
+                   </div>
 
-                  <a href={this.props.appliance.productUrl} target="_blank" className="btn btn-primary">Buy Appliance</a>
+                   <div className="form-group row">
+                     <label className="col-sm-4 col-form-label text-justify">Size</label>
+                     <div className="col-sm-8">
+                         <select className="form-control" value={ this.state.size }>
+                             <option value="notspecified">Not Specified</option>
+                             <option value="small">S</option>
+                             <option value="medium">M</option>
+                             <option value="large">L</option>
+                         </select>
+                       </div>
+                   </div>
+
+                 </div>
               </div>
           </div>
+
       )
     }
 }

@@ -81,6 +81,22 @@ class ApplianceInputForm extends Component {
                         </div>
                     </div>
 
+                    <div className="form-group row">
+                      <label className="col-sm-4 col-form-label text-justify">Residing State</label>
+                      <div className="col-sm-8">
+                          <select className="form-control" value={ this.state.residence }>
+                              <option value="nsw">NSW</option>
+                              <option value="qld">QLD</option>
+                              <option value="nt">NT</option>
+                              <option value="wa">WA</option>
+                              <option value="sa">SA</option>
+                              <option value="vic">VIC</option>
+                              <option value="act">ACT</option>
+                              <option value="tas">TAS</option>
+                          </select>
+                        </div>
+                    </div>
+
                     {   !this.props.detail &&
                         <>
                         <div className="form-group row">
@@ -110,6 +126,8 @@ class ApplianceInputForm extends Component {
                             <label className="col-sm-4 col-form-label text-justify">Energy Stars</label>
                             <div className="col-sm-8">
                                 <select className="form-control">
+                                    <option value="6.0">6.0</option>
+                                    <option value="5.5">5.5</option>
                                     <option value="5.0">5.0</option>
                                     <option value="4.5">4.5</option>
                                     <option value="4.0">4.0</option>
