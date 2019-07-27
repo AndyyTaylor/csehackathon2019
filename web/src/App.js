@@ -17,6 +17,7 @@ class App extends Component {
         this.state = {
             detail: false,
             screen: 'inputform',
+            selectedInd: 0,
             loading: false
         }
 
@@ -65,8 +66,8 @@ class App extends Component {
             pageBody.push(<ApplianceInputForm loading={ this.state.loading } detail={ this.state.detail } handleSubmit={ this.handleSubmit } />);
         } else if (this.state.screen == 'results') {
             console.log(this.state.suggested);
-            pageBody.push(<DetailView appliance={ this.state.suggested[0] } />);
-            pageBody.push(<ResultsRow appliances={ this.state.suggested } />);
+            pageBody.push(<DetailView appliance={ this.state.suggested[this.state.selectedInd] } />);
+            pageBody.push(<ResultsRow onSelectAppliance={(i) => this.setState({ selectedInd: i }) } appliances={ this.state.suggested } />);
         }
 
         return (

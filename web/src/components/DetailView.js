@@ -40,7 +40,7 @@ class DetailView extends Component {
                             }
                         }}/>
 
-                  <a href="#" className="btn btn-primary">Buy Appliance</a>
+                  <a href={this.props.appliance.productUrl} target="_blank" className="btn btn-primary">Buy Appliance</a>
               </div>
           </div>
       )

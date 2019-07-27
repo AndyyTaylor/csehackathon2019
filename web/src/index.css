@@ -169,9 +169,14 @@ h1 {
 }
 
 .results-image {
-    width: 280px;
+    /* width: 280px; */
     height: 200px;
     border-radius: 10px;
+    max-width: 280px;
+    display: block;
+    margin-right: auto;
+    width: auto;
+    margin-left: auto;
 }
 
 .btn-primary {
@@ -234,7 +239,7 @@ h1 {
 
 .detail-image {
   height: 100%;
-  width: 100%;
+  max-width: 100%;
 }
 
 .detail-img-container {

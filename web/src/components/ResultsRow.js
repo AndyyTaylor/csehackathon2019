@@ -19,7 +19,7 @@ class Header extends Component {
 						<div className="card-body">
 							<h5 className="card-title">{appliance.title}</h5>
 							<p className="card-text">${appliance.price}</p>
-							<a href="#" className="btn btn-primary">Show Details</a>
+							<a href="#" onClick={(e) => { e.preventDefault(); this.props.onSelectAppliance(i); }} className="btn btn-primary">Show Details</a>
 						</div>
 					</div>
 				);
