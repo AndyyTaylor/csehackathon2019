@@ -40,7 +40,7 @@ h1 {
 .randomyellow {
   overflow: hidden;
   background-color: #ffe400;
-  padding: 11px;
+  padding: 8px;
 }
 
 .header {
@@ -252,7 +252,7 @@ h1 {
 
 .detail-img-container {
   width: 500px;
-  height: 600px;
+  height: 500px;
 
   border: none;
 }
