@@ -15,7 +15,7 @@ module.exports = function find(body){
     }
   }
 
-  if(!oldAppliance.energyStars){
+  if(!oldAppliance.stars){
     resp.push(404);
   }
   else{
