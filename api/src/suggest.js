@@ -46,9 +46,19 @@ module.exports = function suggest(body) {
   return resp;
 }
 
-function powerSave(oldApp, topApp){
+function powerSave(oldApp, topApp, energyCost){
+  powerInfo = []
 
+  oldPowerCost = energyCost * oldApp.energyConsumption;
+  powerInfo.push(oldPowerCost);
 
+  newPowerCost = energyCost * newApp.energyConsumption;
+  powerInfo.push(newPowerCost);
+
+  priceDiff = oldPowerCost - newPowerCost;
+  powerInfo.push(priceDiff);
+
+  return powerInfo;
 }
 
 function greenHouse(oldApp, topApp, state){
@@ -65,13 +75,13 @@ function greenHouse(oldApp, topApp, state){
   };
 
   carbonInfo = []
-
+  // Carbon values are in GHG (CO2 in kg)
   oldCarbon = state_EF.state * oldApp.energyConsumption;
   carbonInfo.push(oldCarbon);
 
   newCarbon = state_EF.state * newApp.energyConsumption;
   carbonInfo.push(newCarbon);
-  
+
   carbonDiff = oldCarbon - newCarbon;
   carbonInfo.push(carbonDiff);
 
