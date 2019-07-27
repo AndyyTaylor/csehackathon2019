@@ -93,6 +93,7 @@ function savingsInfo(oldApp, newAppList, energyCost, state){
 
 let  oldPowerCost = energyCost * oldApp.energyConsumption;
 let  oldCarbon = state_EF[state] * oldApp.energyConsumption;
+let tree = 6.28;
 
   for(let i = 0; i < newAppList.length; i++){
     newApp = newAppList[i];
@@ -110,7 +111,7 @@ let  oldCarbon = state_EF[state] * oldApp.energyConsumption;
     newApp['savingsOne'] = Math.floor(priceDiff);
     newApp['savingsFive'] = Math.floor(5*priceDiff);
     newApp['savingsTen'] = Math.floor(10*priceDiff);
-  //  newApp['carbonFootprintDiffernce'] = carbonDiff;
+    newApp['trees'] = "By purchasing this appliance you have offset as much carbon as" + Math.floor((oldCarbon -  newCarbon)/tree) + 'trees.'
 
     newAppList[i] = newApp;
   }
