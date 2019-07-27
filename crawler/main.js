@@ -8,7 +8,7 @@ const websites = [
     {
         name: 'Appliances Online',
         baseUrl: 'https://www.appliancesonline.com.au',
-        searchUrl: 'https://www.appliancesonline.com.au/filter/refrigeration/fridges/?brand={brand}&isgridview=true&currentpage={page}&sortkey=lowestprice',
+        searchUrl: 'https://www.appliancesonline.com.au/filter/{type}/?brand={brand}&isgridview=true&currentpage={page}&sortkey=lowestprice',
         filters: [
             {
                 name: 'page',
@@ -18,40 +18,72 @@ const websites = [
             }, {
                 name: 'brand',
                 values: [
+                    'asko',
+                    'arc',
                     'artusi',
+                    'baumatic',
                     'beko',
+                    'blanco',
                     'bosch',
                     'bromic',
                     'chiq',
+                    'delonghi',
+                    'dishlex',
                     'dometic',
                     'electrolux',
                     'esatto',
                     'euro%20appliances',
+                    'euromaid',
+                    'emilia',
+                    'esatto',
                     'fisher%20%26%20paykel',
+                    'germanica',
                     'gorenje',
                     'haier',
+                    'hoover',
                     'hisense',
                     'husky',
+                    'ilve',
                     'inalto',
                     'kelvinator',
                     'lg',
                     'lemair',
                     'liebherr',
+                    'midea',
                     'mitsubishi%20electric',
+                    'neff',
+                    'omega',
                     'palsonic',
+                    'rinnai',
                     'samsung',
+                    'scandium',
+                    'simpson',
                     'seiki',
+                    'siemens',
                     'sharp',
                     'smeg',
+                    'speed%20queen',
+                    'teka',
                     'westinghouse',
-                    'whirlpool'
+                    'whirlpool',
+                    'v-zug'
+                ]
+            }, {
+                name: 'type',
+                values: [
+                    'dishwashers',
+                    'washers-and-dryers/dryers',
+                    'refrigeration/fridges'
                 ]
             }
         ], selectors: [
             {
                 name: 'productUrl',
                 // css: '#refine > div.filter-page-content-container > section.main-content > div.grid-container-flex.ng-star-inserted > aol-product:nth-child(n) > div > div > div > div.body > a > div.mediaWrapper > aol-media-item > a'
-                css: '#refine > div.filter-page-content-container > section.main-content > div.grid-container-flex.ng-star-inserted > aol-product:nth-child(n) > div > div > div > div.body > div.mediaWrapper > a:nth-child(2)'
+                css: [
+                    '#refine > div.filter-page-content-container > section.main-content > div.grid-container-flex.ng-star-inserted > aol-product:nth-child(n) > div > div > div > div.body > div.mediaWrapper > a:nth-child(2)',
+                    '#refine > div.filter-page-content-container > section.main-content > div.grid-container-flex.ng-star-inserted > aol-product:nth-child(n) > div > div > div > div.body > a > div.mediaWrapper > aol-media-item > a'
+                ]
             }, {
                 name: 'title',
                 // css: '#page-container > aol-product-page-container > aol-product-page > ul > li:nth-child(1) > div > aol-product-page-content-top > aol-product-page-content-top-b > div > div > div.product-details > div > aol-product-summary > div > div.content-top > aol-product-title > h1'
@@ -116,6 +148,18 @@ function incrementFilters(site, filterIndex) {
     return ind < site.filters.length;
 }
 
+function getTypeFromUrl(url) {
+    const types = ['fridge', 'dryer', 'dishwasher'];
+
+    for (let i = 0; i < types.length; i++) {
+        if (url.includes(types[i])) {
+            return types[i];
+        }
+    }
+
+    return null;
+}
+
 function scrapeFeedPage(site, filterIndex) {
     return new Promise((resolve, reject) => {
         let searchUrl = site.searchUrl;
@@ -136,27 +180,38 @@ function scrapeFeedPage(site, filterIndex) {
 
             // console.log(body);
             // fs.writeFileSync('./scrape.html', body.html);
-            const $ = cheerio.load(body.html);
+            let $;
+            try {
+                $ = cheerio.load(body.html);
+            } catch(e) {
+                console.log(e);
+                return resolve([]);
+            }
             const data = [];
-            $(site.selectors[0].css).each((i, elem) => {
-                let href = elem.attribs.href;
+            let ind = 0;
+            while (ind < site.selectors[0].css.length && data.length == 0) {
+                $(site.selectors[0].css[ind]).each((i, elem) => {
+                    let href = elem.attribs.href;
 
-                if (href) {
-                    if (href[0] == '/') {
-                        href = site.baseUrl + href;
+                    if (href) {
+                        if (href[0] == '/') {
+                            href = site.baseUrl + href;
+                        }
+
+                        data.push(href);
                     }
+                    console.log(href);
+                });
 
-                    data.push(href);
-                }
-                console.log(href);
-            });
+                ind += 1;
+            }
 
-            resolve(data);
+            resolve({ productLinks: data, type: getTypeFromUrl(searchUrl) });
         });
     })
 }
 
-function scrapeProductPage(site, productUrl, callback) {
+function scrapeProductPage(site, productUrl, type, callback) {
     request('https://1x1k6qg4nd.execute-api.ap-southeast-2.amazonaws.com/prod/fullhtml', {
         json: {
             url: productUrl
@@ -240,6 +295,8 @@ function scrapeProductPage(site, productUrl, callback) {
             }
         }
 
+
+        data.type = type;
         console.log('#', productUrl);
         console.log(data);
 
@@ -256,10 +313,10 @@ async function runner() {
         let cont = true;
         let products = [];
         while (cont) {
-            const productLinks = await scrapeFeedPage(site, filterIndex);
+            const { productLinks, type } = await scrapeFeedPage(site, filterIndex);
 
             async.concat(productLinks, (productUrl, callback) => {
-                scrapeProductPage(site, productUrl, callback);
+                scrapeProductPage(site, productUrl, type, callback);
             }, (err, res) => {
                 if (err) {
                     console.log(err);
