@@ -1,6 +1,8 @@
 module.exports = function suggest(body) {
   let oldAppliance = body;
   let newAppList = [];
+  let json = require(process.cwd() + '/' + oldAppliance.type + '.json');
+  let resp = [];
 
   let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
 
@@ -9,7 +11,7 @@ module.exports = function suggest(body) {
     let energyCost = 0.307;
   }
   else{
-    let energyCost = input.energyCost;
+    let energyCost = oldAppliance.energyCost;
   }
 
   if (!oldAppliance.state){
@@ -23,7 +25,7 @@ module.exports = function suggest(body) {
     var appliance = json[i];
     let newVolume = appliance.length * appliance.width * appliance.height;
 
-      if (appliance.stars > oldAppliance.stars ){
+      if (Number(appliance.stars) > Number(oldAppliance.stars)){
         if (newVolume <= oldVolume + 0.1*oldVolume){
           if (newVolume >= oldVolume - 0.1*oldVolume){
             newAppList.push(appliance);
@@ -32,12 +34,13 @@ module.exports = function suggest(body) {
       }
     }
 
-  newAppList.sort(function (a,b){return a.stars - b.stars});
+  newAppList.sort(function (a,b){return Number(b.stars) - Number(a.stars)});
 
   resp.push(200);
   //newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
   resp.push(newAppList);
   console.log(resp[0]);
+  console.log(resp[1]);
   return resp;
 }
 
@@ -57,7 +60,6 @@ function savingsInfo(oldApp, newAppList, energyCost, state){
 
   oldPowerCost = energyCost * oldApp.energyConsumption;
   oldCarbon = state_EF.state * oldApp.energyConsumption;
-
 
   for(let i = 0; i < newAppList.length; i++){
     newApp = newAppList[i];
