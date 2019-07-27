@@ -6,7 +6,7 @@ const products = require('./products.json');
 const byType = {};
 for (let i = 0; i < products.length; i++) {
     const keys = Object.keys(products[i]);
-    let valid = keys.includes('title') && keys.includes('image') && keys.includes('price');
+    let valid = keys.includes('title') && keys.includes('image') && keys.includes('price') && keys.includes('energyConsumption');
     for (let j = 0; j < keys.length; j++) {
         if (!products[i][keys[j]]) {
             valid = false;

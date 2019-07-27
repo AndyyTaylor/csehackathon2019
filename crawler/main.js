@@ -396,10 +396,82 @@ function scrapeProductPage(site, productUrl, type, callback) {
 
         data.type = type;
         console.log('#', productUrl);
-        console.log(data);
+        // console.log(data);
 
-        callback(null, data);
+        loadConsumption(data, (err, res) => {
+            callback(err, res);
+        });
     });
+}
+
+function loadConsumption(appliance, callback) {
+    let urlType;
+    let urlType2;
+    if (appliance.type == 'fridge') {
+        urlType = 'SearchFridge';
+        urlType2 = 'Fridge';
+    } else if (appliance.type == 'dryer') {
+        urlType = 'SearchDryer';
+        urlType2 = 'Dryer';
+    } else {
+        urlType = 'SelectDishwasher';
+        urlType2 = 'Dishwasher';
+    }
+    request(`https://calculator.energyrating.gov.au/Handler/${urlType}DetailHandler.ashx?SearchText=${appliance.company}`, function(err, res, body) {
+        if (err) {
+            console.log(err);
+        } else {
+            const data = JSON.parse(body).slice(1, JSON.parse(body).length - 1);
+            let bestMatch;
+            let bestJ = 0;
+            const template = appliance.company + '@@' + appliance.model;
+            for (let i = 0; i < data.length; i++) {
+                const cur = data[i];
+                let j;
+                for (j = 0; j < cur.length; j++) {
+                    if (j >= template.length || cur[j].toLowerCase() != template[j].toLowerCase()) {
+                        break;
+                    }
+                }
+
+                if (j > bestJ) {
+                    bestMatch = cur;
+                    bestJ = j;
+                }
+            }
+
+            // console.log(template);
+            // console.log(bestMatch);
+
+            if (!bestMatch) {
+                console.log('no bestmatch');
+                console.log(appliance);
+                return callback(null, appliance);
+            }
+
+            const modelNo = bestMatch.replace(/.+@@/, '');
+            // console.log(modelNo);
+            request.post(`https://calculator.energyrating.gov.au/${urlType2}Detail${appliance.type == 'dryer' ? 's' : ''}.aspx/GetValuesOfModelNo`, {
+                json: {
+                    LocationName: 'NSW',
+                    ModelNo: modelNo
+                }
+            }, function(err, response, body) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const data = body;
+                    // console.log(data);
+
+                    appliance.energyConsumption = parseInt(data.d.Consumption);
+                }
+
+                callback(null, appliance);
+            })
+        }
+
+        // callback(null, appliance);
+    })
 }
 
 async function runner() {
