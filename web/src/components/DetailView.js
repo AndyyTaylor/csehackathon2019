@@ -9,14 +9,20 @@ class DetailView extends Component {
   }
 
   render() {
-    return (
-      <div class = "details">
-        <div class = "app_image">
-          <img src = "https://www.appliancesonline.com.au/public/images/product/cnef4315/extrnl/Liebherr-CNEF4315-350L-Bottom-Mount-Fridge-Hero-high.jpeg"></img>
-        </div>
-      </div>
-    )
+      return (
+          <div className="detail_container container-fluid">
+              <div className="detail-img-container">
+                <img className="rounded detail-image" src="https://www.appliancesonline.com.au/public/images/product/ktb2302wa/external/Kelvinator-KTB2302WA-231L-Top-Mount-Fridge-Hero-Image-high.jpeg" />
+              </div>
+              <div>
+                  <h3>My Epic Fridge Title</h3>
+                  <div>$1,999</div>
+                  <div>600mm x 546mm x 300mm (L x W x H)</div>
 
-  }
+                  <a href="#" className="btn btn-primary">Buy Appliance</a>
+              </div>
+          </div>
+      )
+    }
 }
 export default DetailView;

@@ -11,8 +11,8 @@ class ApplianceInputForm extends Component {
             energyCost: undefined,
             company: undefined,
             model: undefined,
-            type: undefined,
-            consumption: undefined,
+            type: "fridge",
+            stars: 0,
             length: 0,
             width: 0,
             height: 0
@@ -20,6 +20,7 @@ class ApplianceInputForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.isFormValid = this.isFormValid.bind(this);
     }
 
     handleChange(e, key) {
@@ -41,6 +42,14 @@ class ApplianceInputForm extends Component {
         this.props.handleSubmit(this.state);
     }
 
+    isFormValid() {
+        if (!this.detail) {
+            return this.state.type && this.state.model && this.state.company;
+        }
+
+        return true;
+    }
+
     render() {
         return (
             <form onSubmit={ this.handleSubmit }>
@@ -53,7 +62,7 @@ class ApplianceInputForm extends Component {
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label text-justify">Energy Cost</label>
                         <div className="col-sm-8">
-                            <input type="text" className="form-control" value={ this.state.energyCost } onChange={ (e) => this.handleChange(e, 'energyCost') } />
+                            <input type="number" className="form-control" value={ this.state.energyCost } onChange={ (e) => this.handleChange(e, 'energyCost') } />
                             <small className="form-text text-muted">If you don't know it, leave it blank :))</small>
                         </div>
                     </div>
@@ -61,7 +70,7 @@ class ApplianceInputForm extends Component {
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label text-justify">Type</label>
                         <div className="col-sm-8">
-                            <select className="form-control">
+                            <select className="form-control" value={ this.state.type }>
                                 <option value="fridge">Fridge</option>
                                 <option value="dishwasher">Dishwasher</option>
                                 <option value="microwave">Microwave</option>
@@ -98,28 +107,40 @@ class ApplianceInputForm extends Component {
                           <strong>Sorry!</strong> Your appliance could not be identified. Please enter more information.
                         </div>
                         <div className="form-group row">
-                            <label className="col-sm-4 col-form-label text-justify">Consumption</label>
+                            <label className="col-sm-4 col-form-label text-justify">Energy Stars</label>
                             <div className="col-sm-8">
-                                <input type="text" className="form-control" value={ this.state.consumption } onChange={ (e) => this.handleChange(e, 'consumption') } />
+                                <select className="form-control">
+                                    <option value="5.0">5.0</option>
+                                    <option value="4.5">4.5</option>
+                                    <option value="4.0">4.0</option>
+                                    <option value="3.5">3.5</option>
+                                    <option value="3.0">3.0</option>
+                                    <option value="2.5">2.5</option>
+                                    <option value="2.0">2.0</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.0">1.0</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0">0</option>
+                                </select>
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label className="col-sm-4 col-form-label text-justify">Length</label>
+                            <label className="col-sm-4 col-form-label text-justify">Length (mm)</label>
                             <div className="col-sm-8">
                                 <input type="number" className="form-control" value={ this.state.length } onChange={ (e) => this.handleChange(e, 'length') } />
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label className="col-sm-4 col-form-label text-justify">Width</label>
+                            <label className="col-sm-4 col-form-label text-justify">Width (mm)</label>
                             <div className="col-sm-8">
                                 <input type="number" className="form-control" value={ this.state.width } onChange={ (e) => this.handleChange(e, 'width') } />
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label className="col-sm-4 col-form-label text-justify">Height</label>
+                            <label className="col-sm-4 col-form-label text-justify">Height (mm)</label>
                             <div className="col-sm-8">
                                 <input type="number" className="form-control" value={ this.state.height } onChange={ (e) => this.handleChange(e, 'height') } />
                             </div>
@@ -133,7 +154,14 @@ class ApplianceInputForm extends Component {
                         <option value="dishwasher">Dishwasher</option>
                     </select> */}
 
-                    <input type="submit" value="Submit" className="btn btn-primary float-right"/>
+                    <div className="float-right">
+                        { this.props.loading &&
+                            <div class="spinner-border text-primary mr-4" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        }
+                        <input type="submit" value="Submit" disabled={ !this.isFormValid() } className="btn btn-primary float-right"/>
+                    </div>
                 </div>
               </div>
             </form>
