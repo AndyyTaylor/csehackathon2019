@@ -1,6 +1,6 @@
 const request = require('request');
 const assert = require('assert');
-request.post('http://localhost:5000/suggest', {
+request.post('http://localhost:5000/find', {
                 json: {
                       "productUrl":"https://www.appliancesonline.com.au/product/artusi-aret330b-retro-style-fridge-freezer",
                       "title":"Artusi 330L Retro Style Top Mount Fridge ARET330B",

@@ -23,26 +23,59 @@ module.exports = function suggest(body) {
     state = oldAppliance.state;
   }
 
+  newAppList = compileList(newAppList, oldAppliance, 0.1, json)
+  newAppList.sort(function (a,b){return Number(b.stars) - Number(a.stars)});
+
+  resp.push(200);
+  //newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
+  resp.push(newAppList);
+  return resp;
+}
+
+
+function compileList(newAppList, oldAppliance, margin, json){
+  let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
+
   for(let i = 0; i < json.length; i++){
     var appliance = json[i];
     let newVolume = appliance.length * appliance.width * appliance.height;
-
-      if (Number(appliance.stars) > Number(oldAppliance.stars)){
-        if (newVolume <= oldVolume + 0.2*oldVolume){
-          if (newVolume >= oldVolume - 0.2*oldVolume){
-            newAppList.push(appliance);
+    let dupFlag = 0;
+      if (newAppList.length > 9){
+        break;
+      }
+        if (Number(appliance.stars) > Number(oldAppliance.stars)){
+          if (newVolume <= oldVolume + margin*oldVolume){
+            if (newVolume >= oldVolume - margin*oldVolume){
+              if (appliance.model != oldAppliance.model && appliance.company != oldAppliance.company){
+                for (let i = 0; i < newAppList.length; i++){
+                  if (newAppList[i].model == appliance.model && newAppList[i].company == appliance.company){
+                    dupFlag++;
+                    break;
+                }
+              }
+              if (dupFlag == 0){
+              newAppList.push(appliance);
+            }
           }
         }
       }
     }
+  }
 
-  newAppList.sort(function (a,b){return Number(b.stars) - Number(a.stars)});
 
+    if (newAppList.length < 5 && margin < 0.5){
+      margin = margin + 0.1
+      compileList(newAppList, oldAppliance, margin, json)
+    }
+    else{
+      return newAppList
+    }
   resp.push(200);
   newAppList = savingsInfo(oldAppliance, newAppList, energyCost, state);
   resp.push(newAppList);
   return resp;
 }
+
 
 function savingsInfo(oldApp, newAppList, energyCost, state){
   var state_EF = {
@@ -81,6 +114,6 @@ let  oldCarbon = state_EF[state] * oldApp.energyConsumption;
 
     newAppList[i] = newApp;
   }
-  console.log(newAppList);
+
   return newAppList;
 }

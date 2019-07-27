@@ -26,6 +26,5 @@ module.exports = function find(body){
     resp.push(oldAppliance);
   }
 
-  console.log(resp[0]);
   return resp;
 }
