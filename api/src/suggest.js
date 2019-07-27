@@ -1,19 +1,15 @@
-module.exports = function suggest(body) {
-
-  let newAppList = [];
-
-  //Check to see if customer gave energy bill cost, if not set to default
-  if(!input.energyCost){
-    let energyCost = 0.307;
-  }
-  else{
-    let energyCost = input.energyCost;
-  }
-
-
-
-
-  else{
+// module.exports = function suggest(body) {
+//
+//   let newAppList = [];
+//
+//   //Check to see if customer gave energy bill cost, if not set to default
+//   if(!input.energyCost){
+//     let energyCost = 0.307;
+//   }
+//   else{
+//     let energyCost = input.energyCost;
+//   }
+/*
     for(let i = 0; i < json.length; i++){
       var appliance = json[i];
 
@@ -74,3 +70,4 @@ function greenHouse(oldApp, topApp, state){
 
   return carbonInfo;
 }
+*/

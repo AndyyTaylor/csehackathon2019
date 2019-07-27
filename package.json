@@ -1,0 +1,23 @@
+{
+  "name": "csehackathon2019",
+  "version": "1.0.0",
+  "description": "Run\r ```\r npm i\r ```",
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndyyTaylor/csehackathon2019.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndyyTaylor/csehackathon2019/issues"
+  },
+  "homepage": "https://github.com/AndyyTaylor/csehackathon2019#readme"
+}

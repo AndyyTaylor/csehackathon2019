@@ -1,12 +1,12 @@
 const request = require('request');
 const assert = require('assert');
-request.post('http://localhost:5000/suggest', {
+request.post('http://localhost:5000/find', {
                 json: {
                     energyCost: 0.302,
                     appliance: [{
                       type: 'fridge',
-                      company: 'FridgeCo88',
-                      model: 'AOAO23109AOE24'
+                      company: 'bosch',
+                      model: 'kin34p60au'
                     }]
                 }
             }, function(err,res,body){
@@ -15,6 +15,6 @@ request.post('http://localhost:5000/suggest', {
                 console.log(err);
               }
               else{
-              console.log("POST SENT");
+              console.log(res.statusCode);
               }
             });
