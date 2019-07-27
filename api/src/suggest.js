@@ -51,7 +51,7 @@ function powerSave(oldApp, topApp){
 
 }
 
-function greenHouse(energyCost, topApp, state){
+function greenHouse(oldApp, topApp, state){
   var state_EF = {
     "VIC" : 1.17,
     "WA" : 0.78,
@@ -64,4 +64,16 @@ function greenHouse(energyCost, topApp, state){
     //data taken from: https://coolaustralia.org/wp-content/uploads/2013/12/Calculating-GHG-emissions.pdf
   };
 
+  carbonInfo = []
+
+  oldCarbon = state_EF.state * oldApp.energyConsumption;
+  carbonInfo.push(oldCarbon);
+
+  newCarbon = state_EF.state * newApp.energyConsumption;
+  carbonInfo.push(newCarbon);
+  
+  carbonDiff = oldCarbon - newCarbon;
+  carbonInfo.push(carbonDiff);
+
+  return carbonInfo;
 }
