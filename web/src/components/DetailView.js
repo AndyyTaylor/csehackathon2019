@@ -46,6 +46,8 @@ class DetailView extends Component {
                                            beginAtZero: true
                                        }
                                    }]
+                               }, legend: {
+                                   display: false
                                }
                            }}/>
                      </div>
@@ -67,6 +69,8 @@ class DetailView extends Component {
                                            beginAtZero: true
                                        }
                                    }]
+                               }, legend: {
+                                   display: false
                                }
                            }}/>
                      </div>
