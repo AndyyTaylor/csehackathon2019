@@ -79,6 +79,9 @@ class DetailView extends Component {
                            }}/>
                      </div>
                      </div>
+                     <div>
+                     {this.props.appliance.trees}
+                     </div>
                </div>
                {/* <div className="refine">
                  <button onclick="myFunction()" className="dropbtn">REFINE SEARCH</button>

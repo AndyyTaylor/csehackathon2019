@@ -132,7 +132,7 @@ let tree = 6.28;
     newApp['savingsOne'] = Math.floor(priceDiff);
     newApp['savingsFive'] = Math.floor(5*priceDiff);
     newApp['savingsTen'] = Math.floor(10*priceDiff);
-    newApp['trees'] = "By purchasing this appliance you have offset as much carbon as" + Math.floor((oldCarbon -  newCarbon)/tree) + 'trees.'
+    newApp['trees'] = "By purchasing this appliance you have offset as much carbon as " + Math.floor((oldCarbon -  newCarbon)/tree) + ' trees would in one year!!!'
 
     newAppList[i] = newApp;
   }
