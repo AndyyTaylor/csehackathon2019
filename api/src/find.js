@@ -5,6 +5,10 @@ module.exports = function find(body){
 
   let json = require(process.cwd() + '/' + oldAppliance.type + '.json');
 
+  // standardise inputs
+  oldAppliance.model = oldAppliance.model.toLowerCase();
+  oldAppliance.company = oldAppliance.company.toLowerCase();
+
   for(let i = 0; i < json.length; i++){
     var appliance = json[i];
     console.log(appliance.title);

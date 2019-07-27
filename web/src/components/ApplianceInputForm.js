@@ -11,7 +11,7 @@ class ApplianceInputForm extends Component {
             energyCost: undefined,
             company: undefined,
             model: undefined,
-            type: undefined,
+            type: "fridge",
             stars: 0,
             length: 0,
             width: 0,
@@ -20,6 +20,7 @@ class ApplianceInputForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.isFormValid = this.isFormValid.bind(this);
     }
 
     handleChange(e, key) {
@@ -39,6 +40,14 @@ class ApplianceInputForm extends Component {
         this.setState({ detail: this.props.detail });
 
         this.props.handleSubmit(this.state);
+    }
+
+    isFormValid() {
+        if (!this.detail) {
+            return this.state.type && this.state.model && this.state.company;
+        }
+
+        return true;
     }
 
     render() {
@@ -61,7 +70,7 @@ class ApplianceInputForm extends Component {
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label text-justify">Type</label>
                         <div className="col-sm-8">
-                            <select className="form-control">
+                            <select className="form-control" value={ this.state.type }>
                                 <option value="fridge">Fridge</option>
                                 <option value="dishwasher">Dishwasher</option>
                                 <option value="microwave">Microwave</option>
@@ -92,6 +101,11 @@ class ApplianceInputForm extends Component {
 
                     { this.props.detail &&
                         <>
+                        <div className="alert">
+                          <span className="closebtn" onclick="alert.style.display='none';">
+                          </span>
+                          <strong>Sorry!</strong> Your appliance could not be identified. Please enter more information.
+                        </div>
                         <div className="form-group row">
                             <label className="col-sm-4 col-form-label text-justify">Energy Stars</label>
                             <div className="col-sm-8">
@@ -140,7 +154,14 @@ class ApplianceInputForm extends Component {
                         <option value="dishwasher">Dishwasher</option>
                     </select> */}
 
-                    <input type="submit" value="Submit" className="btn btn-primary float-right"/>
+                    <div className="float-right">
+                        { this.props.loading &&
+                            <div class="spinner-border text-primary mr-4" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        }
+                        <input type="submit" value="Submit" disabled={ !this.isFormValid() } className="btn btn-primary float-right"/>
+                    </div>
                 </div>
               </div>
             </form>
