@@ -129,3 +129,32 @@ h1 {
   overflow: hidden;
   padding: 10px;
 }
+
+.results-row {
+    white-space: nowrap;
+
+    width: calc(100% - 60px);
+    margin: 0px 30px 0px 30px;
+
+    border-width: 5px;
+    border-color: lightblue;
+    border-style: solid;
+
+    padding-bottom: 10px;
+}
+
+.results-item {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: top;
+}
+
+.results-image {
+    width: 280px;
+    height: 200px;
+}
+
+.row-header {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
