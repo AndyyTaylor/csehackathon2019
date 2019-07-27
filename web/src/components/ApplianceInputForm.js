@@ -126,6 +126,8 @@ class ApplianceInputForm extends Component {
                             <label className="col-sm-4 col-form-label text-justify">Energy Stars</label>
                             <div className="col-sm-8">
                                 <select className="form-control">
+                                    <option value="6.0">6.0</option>
+                                    <option value="5.5">5.5</option>
                                     <option value="5.0">5.0</option>
                                     <option value="4.5">4.5</option>
                                     <option value="4.0">4.0</option>
