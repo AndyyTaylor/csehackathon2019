@@ -173,3 +173,30 @@ h1 {
     margin: 0;
 }
 
+
+.detail_container {
+  border-width: 5px;
+  border-color: lightblue;
+  border-style: solid;
+
+  display: flex;
+
+  padding: 15px;
+
+  width: calc(100% - 60px);
+  margin: 0px 30px 30px 30px;
+}
+
+.detail-image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.detail-img-container {
+  width: 400px;
+  height: 360px;
+
+  border-width: 5px;
+  border-color: lightblue;
+  border-style: solid;
+}

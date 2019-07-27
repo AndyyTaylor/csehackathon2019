@@ -16,7 +16,7 @@ class App extends Component {
 
         this.state = {
             detail: false,
-            screen: 'inputform',
+            screen: 'results',
             loading: false
         }
 
@@ -30,9 +30,9 @@ class App extends Component {
             // 4040
             this.setState({ loading: true });
             axios.post('http://localhost:5000/find', {
-                appliance: [{type: data.type,
+                type: data.type,
                 model: data.model,
-                company: data.company}]
+                company: data.company
             }).then((response) => {
                 console.log(response);
 
@@ -52,6 +52,7 @@ class App extends Component {
         if (this.state.screen == 'inputform') {
             pageBody.push(<ApplianceInputForm loading={ this.state.loading } detail={ this.state.detail } handleSubmit={ this.handleSubmit } />);
         } else if (this.state.screen == 'results') {
+            pageBody.push(<DetailView />);
             pageBody.push(<ResultsRow />);
         }
 
