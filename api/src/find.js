@@ -11,7 +11,6 @@ module.exports = function find(body){
 
   for(let i = 0; i < json.length; i++){
     var appliance = json[i];
-    console.log(appliance.title);
 
     if (oldAppliance.model == appliance.model && oldAppliance.company == appliance.company){
       oldAppliance = appliance;
@@ -27,6 +26,5 @@ module.exports = function find(body){
     resp.push(oldAppliance);
   }
 
-  console.log(resp[0]);
   return resp;
 }

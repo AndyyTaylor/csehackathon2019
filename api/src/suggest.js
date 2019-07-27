@@ -4,8 +4,6 @@ module.exports = function suggest(body) {
   let json = require(process.cwd() + '/' + oldAppliance.type + '.json');
   let resp = [];
 
-  let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
-
   //Check to see if customer gave energy bill cost, if not set to default
   if(!oldAppliance.energyCost){
     let energyCost = 0.307;
@@ -31,31 +29,35 @@ module.exports = function suggest(body) {
 }
 
 
-
 function compileList(newAppList, oldAppliance, margin, json){
+  let oldVolume = oldAppliance.length * oldAppliance.width * oldAppliance.height;
+
   for(let i = 0; i < json.length; i++){
     var appliance = json[i];
     let newVolume = appliance.length * appliance.width * appliance.height;
     let dupFlag = 0;
-
-      if (Number(appliance.stars) > Number(oldAppliance.stars)){
-        if (newVolume <= oldVolume + margin*oldVolume){
-          if (newVolume >= oldVolume - margin*oldVolume){
-            if (appliance.model != oldAppliance.model && appliance.company != oldAppliance.company){
-              for (let i = 0; i < newAppList.length; i++){
-                if (newAppList[i].model == appliance.model && newAppList[i].company == appliance.company){
-                  dupFlag++;
-                  break;
+      if (newAppList.length > 9){
+        break;
+      }
+        if (Number(appliance.stars) > Number(oldAppliance.stars)){
+          if (newVolume <= oldVolume + margin*oldVolume){
+            if (newVolume >= oldVolume - margin*oldVolume){
+              if (appliance.model != oldAppliance.model && appliance.company != oldAppliance.company){
+                for (let i = 0; i < newAppList.length; i++){
+                  if (newAppList[i].model == appliance.model && newAppList[i].company == appliance.company){
+                    dupFlag++;
+                    break;
                 }
               }
               if (dupFlag == 0){
               newAppList.push(appliance);
-              }
             }
           }
         }
       }
     }
+  }
+
 
     if (newAppList.length < 5 && margin < 0.5){
       margin = margin + 0.1
@@ -100,6 +102,6 @@ function savingsInfo(oldApp, newAppList, energyCost, state){
 
     newAppList[i] = newApp;
   }
-
+  console.log(newAppList.length)
   return newAppList;
 }
